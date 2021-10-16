@@ -2,10 +2,6 @@ const Employee = require('../employee.model.js');
 const expect = require('chai').expect;
 const mongoose = require('mongoose');
 
-after(() => {
-    mongoose.models = {};
-  });
-
 
   describe('Employee', () => {
 
@@ -57,6 +53,3 @@ after(() => {
   
   });
 
-  after(() => {
-    mongoose.models = {};
-  });
