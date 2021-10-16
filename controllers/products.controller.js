@@ -43,7 +43,7 @@ exports.post = async (req, res) => {
     try {
    
       const { name, client  } = req.body;
-      const newProduct = new Product({ name: name, client: client });
+      const newProduct = new Product({ name, client });
       await newProduct.save();
       res.json({ message: 'OK' });
    
@@ -58,9 +58,10 @@ exports.put = async (req, res) => {
     const { name, client } = req.body;
    
     try {
-      const dep = await Product.findById(req.params.id);
+      const {id} = req.params.id;
+      const dep = await Product.findById(id);
       if(dep) {
-        await Product.updateOne({ _id: req.params.id }, { $set: { name: name, client: client }});
+        await Product.updateOne({ _id: id }, { $set: { name, client }});
         res.json({ message: 'OK' });
       }
       else res.status(404).json({ message: 'Not found...' });
@@ -74,9 +75,10 @@ exports.put = async (req, res) => {
 exports.delete = async (req, res) => {
  
     try {
-      const dep = await Product.findById(req.params.id);
+      const {id} = req.params.id;
+      const dep = await Product.findById(id);
       if(dep) {
-        await Product.deleteOne({ _id: req.params.id });
+        await Product.deleteOne({ _id: id });
         res.json({ message: 'OK' });
       }
       else res.status(404).json({ message: 'Not found...' });

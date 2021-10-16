@@ -1,9 +1,8 @@
-// post.routes.js
+
 
 const express = require('express');
 const router = express.Router();
-//const db = require('./../db');
-//const ObjectId = require('mongodb').ObjectId;
+
 const ProductController = require('../controllers/products.controller');
 
 

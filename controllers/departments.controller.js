@@ -42,7 +42,7 @@ exports.getAll = async (req, res) => {
     try {
    
       const { name } = req.body;
-      const newDepartment = new Department({ name: name });
+      const newDepartment = new Department({ name });
       await newDepartment.save();
       res.json({ message: 'OK' });
    
@@ -57,9 +57,10 @@ exports.getAll = async (req, res) => {
     const { name } = req.body;
    
     try {
-      const dep = await Department.findById(req.params.id);
+      const {id} = req.params.id;
+      const dep = await Department.findById(id);
       if(dep) {
-        await Department.updateOne({ _id: req.params.id }, { $set: { name: name }});
+        await Department.updateOne({ _id: id }, { $set: { name }});
         res.json({ message: 'OK', dep  });
       }
       else res.status(404).json({ message: 'Not found...' });
@@ -74,9 +75,10 @@ exports.getAll = async (req, res) => {
   exports.delete = async (req, res) => {
  
     try {
-      const dep = await Department.findById(req.params.id);
+      const {id} = req.params.id;
+      const dep = await Department.findById(id);
       if(dep) {
-        await Department.deleteOne({ _id: req.params.id });
+        await Department.deleteOne({ _id: id });
         res.json({ message: 'OK', dep });
       }
       else res.status(404).json({ message: 'Not found...' });

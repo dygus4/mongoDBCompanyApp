@@ -42,7 +42,7 @@ exports.getAll = async (req, res) => {
     try {
    
       const { firstName, lastName, department } = req.body;
-      const newEmployee = new Employee({ firstName: firstName, lastName: lastName, department: department });
+      const newEmployee = new Employee({ firstName, lastName, department });
       await newEmployee.save();
       res.json({ message: 'OK' });
    
@@ -56,9 +56,10 @@ exports.getAll = async (req, res) => {
     const { firstName, lastName, department } = req.body;
    
     try {
-      const dep = await Employee.findById(req.params.id);
+      const {id} = req.params.id;
+      const dep = await Employee.findById(id);
       if(dep) {
-        await Employee.updateOne({ _id: req.params.id }, { $set: { firstName: firstName, lastName: lastName, department: department }});
+        await Employee.updateOne({ _id: id }, { $set: { firstName, lastName, department }});
         res.json({ message: 'OK' });
       }
       else res.status(404).json({ message: 'Not found...' });
@@ -72,9 +73,10 @@ exports.getAll = async (req, res) => {
   exports.delete = async (req, res) => {
  
     try {
-      const dep = await Employee.findById(req.params.id);
+      const {id} = req.params.id;
+      const dep = await Employee.findById(id);
       if(dep) {
-        await Employee.deleteOne({ _id: req.params.id });
+        await Employee.deleteOne({ _id: id });
         res.json({ message: 'OK' });
       }
       else res.status(404).json({ message: 'Not found...' });
